@@ -4,6 +4,8 @@ pragma solidity ^0.8.26;
 // Shared constants for ArbEmpire contracts
 library Constants {
     // Uniswap V3 Infra
+    address constant UNI_V3_FACTORY = 0x1F98431c8aD98523631AE4a59f267346ea31F984;
+    bytes32 constant POOL_INIT_CODE_HASH = 0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54;
     address constant ROUTER = 0xE592427A0AEce92De3Edee1F18E0157C05861564;
     address constant POS_MGR = 0xC36442b4a4522E871399CD717aBDD847Ab11FE88;
     address constant QUOTER = 0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6;
@@ -51,7 +53,7 @@ library Constants {
 
     // XAU/USD Gold Token and Oracle
     address constant XAU_USD_ORACLE = 0x214FD7E4A9733E4F08C1a4a9f19A7CE7A9C5b8d9;
-    address constant XAU_TOKEN = 0x0000000000000000000000000000000000000000; // Placeholder, replace with actual PAXG
+    address constant XAU_TOKEN = 0x2BA8349123de45E941a136e6D766c90b288B3D09; // PAXG on Arbitrum
 
     // Fees and Limits
     uint256 constant DEV_FEE_BPS = 500; // 5%
@@ -78,7 +80,25 @@ library Constants {
         if (token == CRV)  return 0xaebDA2c976cfd1eE1977Eac079B4382acb849325;
         if (token == STETH)return 0x07D91F22e0Bf718E8110C96b1d7EA6b465c4997a;
         if (token == SXAU) return 0x8F383361A85268365259F3a8824c3f1d9BC4f9A0;
+        if (token == XAU_TOKEN) return XAU_USD_ORACLE;
         return address(0); // No oracle
+    }
+
+    // Pool Fees
+    function getFee(address tokenA, address tokenB) internal pure returns (uint24) {
+        bytes32 key = keccak256(abi.encodePacked(tokenA < tokenB ? tokenA : tokenB, tokenA < tokenB ? tokenB : tokenA));
+        if (key == keccak256(abi.encodePacked(USDC, USDT))) return FEE_001;
+        if (key == keccak256(abi.encodePacked(USDC, DAI))) return FEE_001;
+        if (key == keccak256(abi.encodePacked(USDT, DAI))) return FEE_001;
+        if (key == keccak256(abi.encodePacked(USDC, USDC_E))) return FEE_001;
+        if (key == keccak256(abi.encodePacked(USDC, FRAX))) return FEE_001;
+        if (key == keccak256(abi.encodePacked(USDC, MIM))) return FEE_001;
+        // Add more stable pairs
+        if (key == keccak256(abi.encodePacked(WBTC, WETH))) return FEE_030;
+        if (key == keccak256(abi.encodePacked(WETH, ARB))) return FEE_030;
+        if (key == keccak256(abi.encodePacked(WETH, LINK))) return FEE_030;
+        // Default
+        return FEE_005;
     }
 
     // Pool Addresses (Arbitrum Uniswap V3)

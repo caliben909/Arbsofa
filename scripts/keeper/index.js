@@ -4,6 +4,21 @@ const { FlashbotsBundleProvider } = require("@flashbots/ethers-provider-bundle")
 const { opportunity } = require("./opportunity");
 const { executeAtomicMulticall } = require("./executor");
 const cfg = require("../../config");
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransporter({
+  service: "gmail",
+  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
+});
+
+async function sendAlert(subject, message) {
+  await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: process.env.ALERT_EMAIL,
+    subject,
+    text: message
+  });
+}
 
 const provider = new ethers.providers.JsonRpcProvider(cfg.rpc.primary);
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
@@ -71,6 +86,8 @@ async function loop() {
 
     } catch (e) {
       console.error("Keeper crash", e.message);
+      // Send alert
+      await sendAlert("Keeper Crash", `Error: ${e.message}`);
       sleepMs = Math.min(sleepMs * 2, MAX_SLEEP_MS);
     }
     await sleep(sleepMs);

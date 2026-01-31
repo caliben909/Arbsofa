@@ -8,6 +8,16 @@ const { Contract, ethers } = require("ethers");
 const QUOTER = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
 const abi = ["function quoteExactInputSingle(address,address,uint24,uint256,uint160) external returns (uint256)"];
 
+const chainlinkFeeds = require("../../config").oracles;
+const chainlinkAbi = ["function latestRoundData() external view returns (uint80,int256,uint256,uint256,uint80)"];
+
+async function getChainlinkPrice(token) {
+  const provider = new ethers.providers.JsonRpcProvider(require("../../config").rpc.primary);
+  const feed = new Contract(chainlinkFeeds[token], chainlinkAbi, provider);
+  const [, price,,,] = await feed.latestRoundData();
+  return price;
+}
+
 /* ----------------------------------------------------------
    Token meta (decimals + address)  –  matches config.js
 ---------------------------------------------------------- */
@@ -66,6 +76,16 @@ async function quoteExactInput(tokenInSym, tokenOutSym, amountHuman, provider) {
       0,
       { gasLimit: 50_000 } // static-call
   );
+
+  // Chainlink validation
+  const uniswapPrice = parseFloat(amountHuman) / parseFloat(ethers.utils.formatUnits(amountOut, mOut.decimals));
+  const chainlinkIn = await getChainlinkPrice(tokenInSym);
+  const chainlinkOut = await getChainlinkPrice(tokenOutSym);
+  const chainlinkPrice = parseFloat(ethers.utils.formatUnits(chainlinkIn, 8)) / parseFloat(ethers.utils.formatUnits(chainlinkOut, 8));
+  if (Math.abs(uniswapPrice - chainlinkPrice) / chainlinkPrice > 0.01) { // >1% deviation
+    throw new Error("Price validation failed");
+  }
+
   return ethers.utils.formatUnits(amountOut, mOut.decimals);
 }
 

@@ -81,153 +81,166 @@ contract GodModeEmpireFinal is
                         STABLECOIN MATRIX (ULTRA-LIQUID)
         ----------------------------------------------------------- */
         // USDC PAIRS (19 pairs)
-        _addPool(Constants.USDC, Constants.USDT, address(0));
-        _addPool(Constants.USDC, Constants.DAI, address(0));
-        _addPool(Constants.USDC, Constants.USDC_E, address(0));
-        _addPool(Constants.USDC, Constants.FRAX, address(0));
-        _addPool(Constants.USDC, Constants.MIM, address(0));
+        _addPool(Constants.USDC, Constants.USDT);
+        _addPool(Constants.USDC, Constants.DAI);
+        _addPool(Constants.USDC, Constants.USDC_E);
+        _addPool(Constants.USDC, Constants.FRAX);
+        _addPool(Constants.USDC, Constants.MIM);
 
         // USDT PAIRS (18 pairs)
-        _addPool(Constants.USDT, Constants.DAI, address(0));
-        _addPool(Constants.USDT, Constants.USDC_E, address(0));
-        _addPool(Constants.USDT, Constants.FRAX, address(0));
-        _addPool(Constants.USDT, Constants.MIM, address(0));
+        _addPool(Constants.USDT, Constants.DAI);
+        _addPool(Constants.USDT, Constants.USDC_E);
+        _addPool(Constants.USDT, Constants.FRAX);
+        _addPool(Constants.USDT, Constants.MIM);
 
         // DAI PAIRS (17 pairs)
-        _addPool(Constants.DAI, Constants.USDC_E, address(0));
-        _addPool(Constants.DAI, Constants.FRAX, address(0));
-        _addPool(Constants.DAI, Constants.MIM, address(0));
+        _addPool(Constants.DAI, Constants.USDC_E);
+        _addPool(Constants.DAI, Constants.FRAX);
+        _addPool(Constants.DAI, Constants.MIM);
 
         /* -----------------------------------------------------------
                         ETH ECOSYSTEM (HIGH VOLUME)
         ----------------------------------------------------------- */
         // WETH PAIRS (16 pairs)
-        _addPool(Constants.WETH, Constants.WBTC, address(0));
-        _addPool(Constants.WETH, Constants.ARB, address(0));
-        _addPool(Constants.WETH, Constants.LINK, address(0));
-        _addPool(Constants.WETH, Constants.UNI, address(0));
-        _addPool(Constants.WETH, Constants.SUSHI, address(0));
-        _addPool(Constants.WETH, Constants.GMX, address(0));
-        _addPool(Constants.WETH, Constants.LDO, address(0));
-        _addPool(Constants.WETH, Constants.wstETH, address(0));
-        _addPool(Constants.WETH, Constants.MAGIC, address(0));
-        _addPool(Constants.WETH, Constants.DPX, address(0));
-        _addPool(Constants.WETH, Constants.RDNT, address(0));
+        _addPool(Constants.WETH, Constants.WBTC);
+        _addPool(Constants.WETH, Constants.ARB);
+        _addPool(Constants.WETH, Constants.LINK);
+        _addPool(Constants.WETH, Constants.UNI);
+        _addPool(Constants.WETH, Constants.SUSHI);
+        _addPool(Constants.WETH, Constants.GMX);
+        _addPool(Constants.WETH, Constants.LDO);
+        _addPool(Constants.WETH, Constants.wstETH);
+        _addPool(Constants.WETH, Constants.MAGIC);
+        _addPool(Constants.WETH, Constants.DPX);
+        _addPool(Constants.WETH, Constants.RDNT);
 
         // WBTC PAIRS (15 pairs)
-        _addPool(Constants.WBTC, Constants.ARB, address(0));
-        _addPool(Constants.WBTC, Constants.LINK, address(0));
-        _addPool(Constants.WBTC, Constants.UNI, address(0));
-        _addPool(Constants.WBTC, Constants.GMX, address(0));
-        _addPool(Constants.WBTC, Constants.wstETH, address(0));
+        _addPool(Constants.WBTC, Constants.ARB);
+        _addPool(Constants.WBTC, Constants.LINK);
+        _addPool(Constants.WBTC, Constants.UNI);
+        _addPool(Constants.WBTC, Constants.GMX);
+        _addPool(Constants.WBTC, Constants.wstETH);
 
         /* -----------------------------------------------------------
                         DEFI BLUE CHIPS (SOLID VOLUME)
         ----------------------------------------------------------- */
         // ARB PAIRS (14 pairs)
-        _addPool(Constants.ARB, Constants.LINK, address(0));
-        _addPool(Constants.ARB, Constants.UNI, address(0));
-        _addPool(Constants.ARB, Constants.GMX, address(0));
-        _addPool(Constants.ARB, Constants.LDO, address(0));
-        _addPool(Constants.ARB, Constants.MAGIC, address(0));
-        _addPool(Constants.ARB, Constants.DPX, address(0));
+        _addPool(Constants.ARB, Constants.LINK);
+        _addPool(Constants.ARB, Constants.UNI);
+        _addPool(Constants.ARB, Constants.GMX);
+        _addPool(Constants.ARB, Constants.LDO);
+        _addPool(Constants.ARB, Constants.MAGIC);
+        _addPool(Constants.ARB, Constants.DPX);
 
         // LINK PAIRS (13 pairs)
-        _addPool(Constants.LINK, Constants.UNI, address(0));
-        _addPool(Constants.LINK, Constants.GMX, address(0));
-        _addPool(Constants.LINK, Constants.LDO, address(0));
-        _addPool(Constants.LINK, Constants.MAGIC, address(0));
+        _addPool(Constants.LINK, Constants.UNI);
+        _addPool(Constants.LINK, Constants.GMX);
+        _addPool(Constants.LINK, Constants.LDO);
+        _addPool(Constants.LINK, Constants.MAGIC);
 
         // UNI PAIRS (12 pairs)
-        _addPool(Constants.UNI, Constants.GMX, address(0));
-        _addPool(Constants.UNI, Constants.LDO, address(0));
-        _addPool(Constants.UNI, Constants.MAGIC, address(0));
+        _addPool(Constants.UNI, Constants.GMX);
+        _addPool(Constants.UNI, Constants.LDO);
+        _addPool(Constants.UNI, Constants.MAGIC);
 
         // GMX PAIRS (11 pairs)
-        _addPool(Constants.GMX, Constants.LDO, address(0));
-        _addPool(Constants.GMX, Constants.MAGIC, address(0));
-        _addPool(Constants.GMX, Constants.DPX, address(0));
+        _addPool(Constants.GMX, Constants.LDO);
+        _addPool(Constants.GMX, Constants.MAGIC);
+        _addPool(Constants.GMX, Constants.DPX);
 
         /* -----------------------------------------------------------
                         YIELD TOKENS (SOLID APY PLAYS)
         ----------------------------------------------------------- */
         // wstETH PAIRS (10 pairs)
-        _addPool(Constants.wstETH, Constants.FRAX, address(0));
-        _addPool(Constants.wstETH, Constants.LDO, address(0));
+        _addPool(Constants.wstETH, Constants.FRAX);
+        _addPool(Constants.wstETH, Constants.LDO);
 
         // LDO PAIRS (9 pairs)
-        _addPool(Constants.LDO, Constants.MAGIC, address(0));
-        _addPool(Constants.LDO, Constants.DPX, address(0));
+        _addPool(Constants.LDO, Constants.MAGIC);
+        _addPool(Constants.LDO, Constants.DPX);
 
         /* -----------------------------------------------------------
                         GAMING/METAVERSE TOKENS
         ----------------------------------------------------------- */
         // MAGIC PAIRS (8 pairs)
-        _addPool(Constants.MAGIC, Constants.DPX, address(0));
-        _addPool(Constants.MAGIC, Constants.RDNT, address(0));
+        _addPool(Constants.MAGIC, Constants.DPX);
+        _addPool(Constants.MAGIC, Constants.RDNT);
 
         // DPX PAIRS (7 pairs)
-        _addPool(Constants.DPX, Constants.RDNT, address(0));
+        _addPool(Constants.DPX, Constants.RDNT);
 
         /* -----------------------------------------------------------
                         FINAL STABLECOIN BRIDGES
         ----------------------------------------------------------- */
         // Cross-stable pairs for maximum efficiency
-        _addPool(Constants.FRAX, Constants.MIM, address(0));
-        _addPool(Constants.USDC_E, Constants.FRAX, address(0));
-        _addPool(Constants.USDC_E, Constants.MIM, address(0));
+        _addPool(Constants.FRAX, Constants.MIM);
+        _addPool(Constants.USDC_E, Constants.FRAX);
+        _addPool(Constants.USDC_E, Constants.MIM);
 
         // SUSHI special pairs
-        _addPool(Constants.SUSHI, Constants.WETH, address(0));
-        _addPool(Constants.SUSHI, Constants.ARB, address(0));
-        _addPool(Constants.SUSHI, Constants.LINK, address(0));
+        _addPool(Constants.SUSHI, Constants.WETH);
+        _addPool(Constants.SUSHI, Constants.ARB);
+        _addPool(Constants.SUSHI, Constants.LINK);
 
         // RDNT final pairs
-        _addPool(Constants.RDNT, Constants.WETH, address(0));
-        _addPool(Constants.RDNT, Constants.ARB, address(0));
-        _addPool(Constants.RDNT, Constants.LINK, address(0));
+        _addPool(Constants.RDNT, Constants.WETH);
+        _addPool(Constants.RDNT, Constants.ARB);
+        _addPool(Constants.RDNT, Constants.LINK);
 
         /* -----------------------------------------------------------
                         XAU/USD SECTION - 19 NEW PAIRS
         ----------------------------------------------------------- */
-        _addPool(Constants.XAU_TOKEN, Constants.USDC, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.USDT, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.DAI, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.USDC_E, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.FRAX, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.MIM, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.WETH, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.WBTC, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.ARB, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.LINK, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.UNI, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.GMX, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.LDO, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.wstETH, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.MAGIC, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.DPX, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.RDNT, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.SUSHI, address(0));
+        _addPool(Constants.XAU_TOKEN, Constants.USDC);
+        _addPool(Constants.XAU_TOKEN, Constants.USDT);
+        _addPool(Constants.XAU_TOKEN, Constants.DAI);
+        _addPool(Constants.XAU_TOKEN, Constants.USDC_E);
+        _addPool(Constants.XAU_TOKEN, Constants.FRAX);
+        _addPool(Constants.XAU_TOKEN, Constants.MIM);
+        _addPool(Constants.XAU_TOKEN, Constants.WETH);
+        _addPool(Constants.XAU_TOKEN, Constants.WBTC);
+        _addPool(Constants.XAU_TOKEN, Constants.ARB);
+        _addPool(Constants.XAU_TOKEN, Constants.LINK);
+        _addPool(Constants.XAU_TOKEN, Constants.UNI);
+        _addPool(Constants.XAU_TOKEN, Constants.GMX);
+        _addPool(Constants.XAU_TOKEN, Constants.LDO);
+        _addPool(Constants.XAU_TOKEN, Constants.wstETH);
+        _addPool(Constants.XAU_TOKEN, Constants.MAGIC);
+        _addPool(Constants.XAU_TOKEN, Constants.DPX);
+        _addPool(Constants.XAU_TOKEN, Constants.RDNT);
+        _addPool(Constants.XAU_TOKEN, Constants.SUSHI);
     }
 
     // HELPER FUNCTION TO ADD POOLS
-    function _addPool(address tokenA, address tokenB, address pool) internal {
-        pairToPool[_key(tokenA, tokenB)] = pool;
-        emit PoolAdded(tokenA, tokenB, pool);
+    function _addPool(address tokenA, address tokenB) internal {
+        address pool = Constants.getPool(tokenA, tokenB);
+        if (pool == address(0)) {
+            uint24 fee = Constants.getFee(tokenA, tokenB);
+            pool = computePoolAddress(tokenA, tokenB, fee);
+            // Check if pool exists
+            try IUniswapV3Pool(pool).slot0() returns (uint160, int24, uint16, uint16, uint16, uint8, bool) {
+                // Pool exists
+            } catch {
+                pool = address(0); // Don't add if not exists
+            }
+        }
+        if (pool != address(0)) {
+            pairToPool[_key(tokenA, tokenB)] = pool;
+            emit PoolAdded(tokenA, tokenB, pool);
+        }
     }
 
     // CHAINLINK GOLD ORACLE INTEGRATION
     function addXAUUSDPair() external onlyOwner {
         // XAU/USD vs STABLECOINS (ULTRA SKEWED)
-        _addPool(Constants.XAU_TOKEN, Constants.USDC, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.USDT, address(0));
-        _addPool(Constants.XAU_TOKEN, Constants.DAI, address(0));
+        _addPool(Constants.XAU_TOKEN, Constants.USDC);
+        _addPool(Constants.XAU_TOKEN, Constants.USDT);
+        _addPool(Constants.XAU_TOKEN, Constants.DAI);
 
         // XAU/ETH (VOLATILITY PLAY)
-        _addPool(Constants.XAU_TOKEN, Constants.WETH, address(0));
+        _addPool(Constants.XAU_TOKEN, Constants.WETH);
 
         // XAU/BTC (DIGITAL GOLD VS PHYSICAL GOLD)
-        _addPool(Constants.XAU_TOKEN, Constants.WBTC, address(0));
+        _addPool(Constants.XAU_TOKEN, Constants.WBTC);
     }
 
     // SKEWED XAU/USD STRATEGY
@@ -262,6 +275,42 @@ contract GodModeEmpireFinal is
             this.executeSkewArb(Constants.XAU_TOKEN, Constants.USDC, amounts[i]);
             this.executeSkewArb(Constants.XAU_TOKEN, Constants.WETH, amounts[i]);
         }
+    }
+
+    // REAL-TIME GOLD VOLATILITY CAPTURE
+    function calculateXAUSkew() public view returns (uint256 skewBps) {
+        // Get current XAU/USD price from Chainlink
+        uint256 currentPrice = getChainlinkPrice(Constants.XAU_USD_ORACLE);
+
+        // Calculate 24h volatility
+        uint256 volatility = calculateVolatility(Constants.XAU_TOKEN, 86400); // 24 hours
+
+        // Adjust skew based on gold's natural volatility (0.3-0.7% daily)
+        if (volatility > 50) { // High volatility
+            skewBps = 75; // 7.5% skew for maximum capture
+        } else if (volatility > 25) { // Medium volatility
+            skewBps = 55; // 5.5% skew
+        } else { // Low volatility
+            skewBps = 35; // 3.5% skew
+        }
+    }
+
+    // EXECUTE DYNAMIC SKEW ARBITRAGE
+    function executeXAUSkewArbitrage(uint256 amount) external onlyKeeper {
+        uint256 skew = calculateXAUSkew();
+
+        // Adjust your pool skew dynamically
+        _adjustPoolSkew(Constants.XAU_TOKEN, Constants.USDC, skew);
+
+        // Execute arbitrage with dynamic skew
+        executeSkewArb(Constants.XAU_TOKEN, Constants.USDC, amount);
+    }
+
+    // Adjust pool skew (placeholder - integrate with SkewEnforcingV3)
+    function _adjustPoolSkew(address tokenA, address tokenB, uint256 skewBps) internal {
+        // Placeholder: adjust the target ratio based on skewBps
+        // For example, if skewBps = 75, set target to 42.5/57.5 or something
+        // Integrate with SkewEnforcingV3.enforceSkew(pairToPool[_key(tokenA, tokenB)]);
     }
 
     /* -----------------------------------------------------------

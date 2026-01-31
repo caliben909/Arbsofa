@@ -140,4 +140,4 @@ For backtesting, set `DRY_RUN=true` in your `.env` file to simulate trades witho
 
 ## Disclaimer
 
-This software is provided as-is. DeFi trading involves significant risks including impermanent loss, smart contract vulnerabilities, and market volatility. Always conduct your own research and use at your own risk.
+This software is provided as-is. DeFi trading involves significant risks including impermanent loss, smart contract vulnerabilities, and market volatility. Always conduct your own research and use at your own risk."# Arbsofa" 

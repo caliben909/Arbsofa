@@ -1,4 +1,4 @@
-# DeFi Empire Bot
+# Arbsofa
 
 This is an advanced DeFi arbitrage bot designed for the Arbitrum network. It performs various arbitrage strategies including triangular and quad arbitrages, flash loans, and more, utilizing multiple tokens and protocols.
 

@@ -36,10 +36,10 @@ module.exports = {
     PEPE:  "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
     BONK:  "0x09199D9A5F4448d0848e4395D065e1A1C5A5263f",
     
-    // GOLD TOKENS
-    PAXG:  "0x2BA8349123de45E941a136e6D766c90b288B3D09", // PAX Gold on Arbitrum
-    XAUT:  "0x0000000000000000000000000000000000000000", // Tether Gold (add when live)
-    PMGT:  "0x0000000000000000000000000000000000000000", // Perth Mint Gold (add when live)
+    // GOLD TOKENS - VERIFIED ON ARBITRUM
+    PAXG:  "0x2BA8349123de45E941a136e6D766c90b288B3D09", // PAX Gold ✅
+    XAUT:  "0x0C5566c8BA86d03A5cE419132D8BD4b35E8381A2", // Tether Gold ✅
+    // PMGT: Not available on Arbitrum (Ethereum only)
   },
   pools: { // 0.05 % unless noted
     "USDC/USDT" : "0x6c60E6Ab82D73491e345FC3333D3C875211e5f3F", // 0.01 %
@@ -62,10 +62,12 @@ module.exports = {
   },
   
   // GOLD POOLS - Specialized skewed pools for gold arbitrage
+  // ⚠️  THESE POOLS MAY NOT EXIST YET - Run scripts/discover-gold-pools.js to check
+  // If they don't exist, use scripts/create-gold-pool.js to create them
   goldPools: {
     // PAXG/USDC - Primary gold trading pair
     "PAXG/USDC": {
-      address: "0x0000000000000000000000000000000000000000", // Replace with actual pool
+      address: null, // Will be populated by discovery script
       targetRatio0: 4850,  // 48.5% PAXG / 51.5% USDC (gold tends to be overweighted)
       targetRatio1: 5150,
       minDeviation: 50,    // 0.5% minimum (gold is less volatile than crypto)
@@ -77,7 +79,7 @@ module.exports = {
     
     // PAXG/WETH - Gold/Ethereum pair
     "PAXG/WETH": {
-      address: "0x0000000000000000000000000000000000000000",
+      address: null,
       targetRatio0: 4750,  // 47.5% PAXG / 52.5% WETH
       targetRatio1: 5250,
       minDeviation: 75,    // 0.75% (higher volatility vs ETH)
@@ -87,21 +89,9 @@ module.exports = {
       goldType: 'PAXG'
     },
     
-    // PAXG/WBTC - Digital gold vs Bitcoin
-    "PAXG/WBTC": {
-      address: "0x0000000000000000000000000000000000000000",
-      targetRatio0: 4900,  // 49% PAXG / 51% WBTC
-      targetRatio1: 5100,
-      minDeviation: 100,   // 1% (both volatile)
-      maxFlashSize: ethers.utils.parseUnits('25', 18),
-      fee: 3000,
-      isGold: true,
-      goldType: 'PAXG'
-    },
-    
     // PAXG/USDT - Alternative stable pair
     "PAXG/USDT": {
-      address: "0x0000000000000000000000000000000000000000",
+      address: null,
       targetRatio0: 4925,  // 49.25% / 50.75%
       targetRatio1: 5075,
       minDeviation: 50,

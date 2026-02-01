@@ -44,7 +44,9 @@ class ExecutionEngine {
         
         try {
             // Determine execution strategy
-            if (opportunity.useAave) {
+            if (opportunity.isGold) {
+                return await this.executeGoldArbitrage(opportunity, gasConfig);
+            } else if (opportunity.useAave) {
                 return await this._executeAaveFlashLoan(opportunity, gasConfig);
             } else {
                 return await this._executeUniswapFlashLoan(opportunity, gasConfig);
@@ -231,6 +233,94 @@ class ExecutionEngine {
     async syncNonce() {
         this.nonce = await this.wallet.getTransactionCount('pending');
         console.log(`  🔄 Nonce synced: ${this.nonce}`);
+    }
+
+    /**
+     * Execute gold arbitrage with special handling
+     */
+    async executeGoldArbitrage(opportunity, gasConfig) {
+        const startTime = Date.now();
+        
+        console.log(`🥇 Executing GOLD arbitrage: ${opportunity.poolName}`);
+        console.log(`   Gold Price: $${opportunity.goldPrice || 'fetching...'}`);
+        console.log(`   Volatility: ${opportunity.goldVolatility}`);
+        console.log(`   Near London Fix: ${opportunity.nearLondonFix ? 'YES ⚠️' : 'No'}`);
+        
+        // Use higher gas for gold (priority execution)
+        const priorityGas = {
+            ...gasConfig,
+            maxFeePerGas: gasConfig.maxFeePerGas.mul(120).div(100), // 20% higher
+            maxPriorityFeePerGas: gasConfig.maxPriorityFeePerGas.mul(150).div(100) // 50% higher priority
+        };
+        
+        // Add extra confirmation for gold during volatile periods
+        if (opportunity.nearLondonFix || opportunity.goldVolatility === 'extreme') {
+            console.log('   ⚠️  HIGH VOLATILITY PERIOD - Extra confirmation required');
+            
+            // Re-validate opportunity one more time
+            const slot0 = await opportunity.poolContract.slot0().catch(() => null);
+            if (slot0 && slot0.sqrtPriceX96.toString() !== opportunity.sqrtPriceX96) {
+                console.log('   ❌ Price changed during validation - aborting');
+                return { success: false, reason: 'price_changed' };
+            }
+        }
+        
+        // Build and send transaction
+        const tx = await this._buildGoldTransaction(opportunity, priorityGas);
+        
+        console.log(`   📤 Gold arbitrage tx sent: ${tx.hash}`);
+        
+        const receipt = await tx.wait();
+        
+        if (receipt.status === 1) {
+            return {
+                success: true,
+                method: 'gold_arbitrage',
+                hash: tx.hash,
+                gasUsed: receipt.gasUsed.toString(),
+                blockNumber: receipt.blockNumber,
+                duration: Date.now() - startTime,
+                goldVolatility: opportunity.goldVolatility,
+                nearLondonFix: opportunity.nearLondonFix
+            };
+        } else {
+            throw new Error('Gold arbitrage transaction failed');
+        }
+    }
+
+    /**
+     * Build gold arbitrage transaction
+     */
+    async _buildGoldTransaction(opportunity, gasConfig) {
+        const contract = new ethers.Contract(
+            this.config.executorAddress,
+            [
+                'function executeGoldArbitrage(tuple(address,address,uint256,uint256,uint256),uint256) external',
+                'function getGoldPrice() view returns (uint256)',
+                'function isNearLondonFix() view returns (bool)'
+            ],
+            this.wallet
+        );
+
+        const params = {
+            skewedPool: opportunity.poolAddress,
+            exitPool: opportunity.exitPool || opportunity.poolAddress,
+            flashAmount: opportunity.flashAmount,
+            minProfitBP: Math.floor((opportunity.minProfitRequired || this.config.goldMinProfitBP) * 100),
+            deadline: Math.floor(Date.now() / 1000) + 60
+        };
+
+        // Higher slippage tolerance near London Fix
+        const maxSlippage = opportunity.nearLondonFix ? 150 : 100; // 1.5% near fix, 1% normal
+
+        const tx = await contract.executeGoldArbitrage(params, maxSlippage, {
+            gasLimit: ethers.BigNumber.from(600000), // Higher gas limit for gold
+            maxFeePerGas: gasConfig.maxFeePerGas,
+            maxPriorityFeePerGas: gasConfig.maxPriorityFeePerGas,
+            nonce: this._getNonce()
+        });
+
+        return tx;
     }
 
     /**

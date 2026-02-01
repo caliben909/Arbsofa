@@ -76,8 +76,48 @@ async function main() {
             if (opportunities.length > 0) {
                 console.log(`\n🔍 Found ${opportunities.length} opportunities at block ${await provider.getBlockNumber()}`);
                 
-                // Process top opportunities
-                for (const opp of opportunities.slice(0, config.bundleSize || 2)) {
+                // Separate gold and standard opportunities
+                const goldOpportunities = opportunities.filter(o => o.isGold);
+                const standardOpportunities = opportunities.filter(o => !o.isGold);
+                
+                console.log(`   🥇 Gold: ${goldOpportunities.length} | 📊 Standard: ${standardOpportunities.length}`);
+                
+                // Process gold opportunities first (higher value)
+                for (const opp of goldOpportunities.slice(0, 2)) {
+                    console.log(`\n  🥇 GOLD: ${opp.poolName}`);
+                    console.log(`     Gold Price: $${opp.goldPrice || 'N/A'} | Vol: ${opp.goldVolatility}`);
+                    console.log(`     Near London Fix: ${opp.nearLondonFix ? 'YES ⚠️' : 'No'}`);
+                    console.log(`     Skew: ${opp.currentRatio0.toFixed(2)}%/${opp.currentRatio1.toFixed(2)}%`);
+                    console.log(`     Flash: ${ethers.utils.formatUnits(opp.flashAmount, opp.flashToken.decimals)} ${opp.flashToken.symbol}`);
+                    console.log(`     Est. Profit: ${ethers.utils.formatEther(opp.netProfit)} ETH (${opp.profitPercent.toFixed(3)}%)`);
+                    
+                    // Validate opportunity
+                    const validation = await validator.validate(opp);
+                    
+                    if (!validation.valid) {
+                        console.log(`     ⏭️  VALIDATION FAILED: ${validation.reasons.join(', ')}`);
+                        validator.recordFailure(opp, 'validation_failed');
+                        continue;
+                    }
+                    
+                    console.log(`     ✅ VALIDATED - Executing...`);
+                    
+                    // Get optimal gas with high priority for gold
+                    const gasConfig = await gasOptimizer.getOptimalGasPrice('high');
+                    
+                    try {
+                        const result = await engine.execute(opp, gasConfig);
+                        console.log(`     🎉 SUCCESS: ${result.method} - ${result.hash}`);
+                        detector.markExecuted(opp.id, result);
+                    } catch (error) {
+                        console.log(`     ❌ FAILED: ${error.message}`);
+                        validator.recordFailure(opp, error.message);
+                    }
+                }
+                
+                // Process standard opportunities (remaining bundle capacity)
+                const remainingCapacity = (config.bundleSize || 3) - goldOpportunities.length;
+                for (const opp of standardOpportunities.slice(0, remainingCapacity)) {
                     console.log(`\n  📊 ${opp.poolName}`);
                     console.log(`     Skew: ${opp.currentRatio0.toFixed(2)}%/${opp.currentRatio1.toFixed(2)}% (target: ${opp.targetRatio0}%)`);
                     console.log(`     Deviation: ${opp.deviation.toFixed(2)}%`);

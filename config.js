@@ -1,9 +1,9 @@
 module.exports = {
   chainId: 42161,
   rpc: {
-    primary: process.env.ARB_RPC || "https://arb-mainnet.g.alchemy.com/v2/demo",
-    fallback: "https://rpc.ankr.com/arbitrum",
-    backup: "https://arbitrum.blockpi.network/v1/rpc/public"
+    primary: process.env.ARB_RPC || "https://arb-mainnet.g.alchemy.com/v2/ciKk9vUCT7AqNFELsCXwC",
+    fallback: "https://go.getblock.us/498b2287f1f148efbb85c34ac5812995",
+    backup: "https://2BMg75Ad.bZeGVL9vytbjErE3bnxLzBX7uzOptGHJ"
   },
   flashbots: true,
   bundleSize: 3,          // Increased for gold opportunities
